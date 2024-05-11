@@ -14,3 +14,4 @@ The HAL offers high-level and feature-oriented APIs, with a high-portability lev
 The LL offers low-level APIs at registers level, with better optimization but less portability. They require deep knowledge of the MCU and peripherals specifications.
 The source code of HAL and LL drivers is developed in Strict ANSI-C which makes it independent from the development tools. It is fully documented and is MISRA-C 2004 compliant.
 # STM32 HAL Drivers Examples
+You can find in "img" file
