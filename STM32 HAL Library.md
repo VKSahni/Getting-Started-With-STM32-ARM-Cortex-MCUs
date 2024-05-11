@@ -15,3 +15,7 @@ The LL offers low-level APIs at registers level, with better optimization but le
 The source code of HAL and LL drivers is developed in Strict ANSI-C which makes it independent from the development tools. It is fully documented and is MISRA-C 2004 compliant.
 # STM32 HAL Drivers Examples
 You can find in "img" file
+# HAL Detailed Function Description
+In the same manner, there are low-level hardware drivers for almost all the hardware peripherals in the STM32 microcontrollers. Including Timers, ADC, USART, I2C, USB, DAC, Comparators, etc.
+We’ll configure these peripherals and generate the initialization C-Code using the CubeMX software tool. Here is a screenshot for what it looks like inside the interface where we configure the timer module for example.
+# Hardware Timer Module Configuration Within CubeMX
