@@ -42,3 +42,12 @@ Cortex®-M4 with FPU core S-bus
 DMA1
 
 DMA2
+# Seven slaves:
+
+Internal Flash memory on the ICode bus
+Internal Flash memory on DCode bus
+Internal SRAM1
+Internal SRAM2
+AHB1 peripherals including AHB to APB bridges and APB peripherals (connected to APB1 and APB2)
+AHB2 peripherals
+The external memory controller (QUAD SPI)
