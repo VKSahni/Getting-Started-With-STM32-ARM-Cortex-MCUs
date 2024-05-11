@@ -57,3 +57,83 @@ AHB1 peripherals including AHB to APB bridges and APB peripherals (connected to 
 AHB2 peripherals
 
 The external memory controller (QUAD SPI)
+
+This bus matrix enables multiple masters on the bus to communicate with slaves concurrently. This accelerates the overall performance especially when DMA units are programmed.
+
+The CPU can be doing some calculations and workload while the DMA1 unit is moving the data being received via SPI to SRAM1 memory space. All being done in the same time without CPU intervention or interrupts when every single byte is received.
+# Multilayer AHB Bus Matrix
+The BusMatrix manages the access arbitration between masters. The arbitration uses a Round Robin algorithm. The BusMatrix is composed of five masters (CPU AHB, system bus, DCode bus, ICode bus, DMA1, and DMA2 bus) and seven slaves (FLASH, SRAM1, SRAM2, AHB1 (including APB1 and APB2), AHB2 and QUAD SPI).
+S0 – I-Bus: This bus connects the instruction bus of the Cortex®-M4 core to the BusMatrix. This bus is used by the core to fetch instructions.
+
+S1 – D-Bus: This bus connects the data bus of the Cortex®-M4 core to the BusMatrix. This bus is used by the core for literal load and debug access.
+
+S2 – S-Bus: This bus connects the system bus of the Cortex®-M4 core to the BusMatrix. This bus is used by the core to access data located in a peripheral or SRAM area.
+
+S3, S4 – DMA-Bus: This bus connects the AHB master interface of the DMA to the BusMatrix.The targets of this bus are the SRAM1 and SRAM2, the AHB1 peripherals including the APB1 and APB2 peripherals, the AHB2 peripherals and the external memories through the QUAD SPI.
+# AHB/APB Bus Bridges
+The two AHB/APB bridges provide full synchronous connections between the AHB and the two APB buses, allowing flexible selection of the peripheral frequency. address mapping of the peripherals connected to this bridge.
+After each device reset, all peripheral clocks are disabled (except for the SRAM1/2 and Flash memory interface). Before using a peripheral you have to enable its clock in the RCC_AHBxENR and the RCC_APBxENR registers.
+# RCC & Clock Tree(Resect and Clock Control (RCC))
+Resect and Clock Control (RCC) Circuitry is our next topic. Let’s just start with the reset circuitry and its functionality. There are three types of reset, defined as system reset, power reset, and backup domain reset.
+
+A Power Reset is generated when one of the following events occurs:
+
+a Brown-out Reset (BOR).
+
+when exiting from Standby mode.
+
+when exiting from Shutdown mode.
+
+A System Reset sets all registers to their reset values unless specified otherwise in the register description. The reset source can be identified by checking the reset flags in the Control/Status register, RCC_CSR. A system reset is generated when one of the following events occurs:
+
+A low level on the NRST pin (external reset)
+
+Window watchdog event (WWDG reset)
+
+Independent watchdog event (IWDG reset)
+
+A firewall event (FIREWALL reset)
+
+A software reset (SW reset)
+
+Low-power mode security reset 
+
+Option byte loader reset 
+
+A Brown-out reset
+
+The Software Reset: The SYSRESETREQ bit in Cortex®-M4 Application Interrupt and Reset Control Register must be set to force a software reset on the device.
+
+The Backup Domain Reset has two specific reset signals. A backup domain reset is generated when one of the following events occurs:
+
+Software reset, triggered by setting the BDRST bit in the Backup domain control register (RCC_BDCR).
+
+VDD or VBAT power on, if both supplies have previously been powered off. A backup domain reset only affects the LSE oscillator, the RTC, the Backup registers, and the RCC Backup domain control register.
+# Clock Tree
+Four different clock sources can be used to drive the system clock (SYSCLK):
+
+HSI16 (high speed internal)16 MHz RC oscillator clock
+
+MSI (multispeed internal) RC oscillator clock
+
+HSE oscillator clock, from 4 to 48 MHz
+
+PLL clock
+
+The MSI is used as system clock source after startup from Reset, configured at 4 MHz.
+
+The devices have the following additional clock sources:
+
+32 kHz low-speed internal RC (LSI RC) which drives the independent watchdog and optionally the RTC used for Auto-wakeup from Stop and Standby modes.
+
+32.768 kHz low-speed external crystal (LSE crystal) which optionally drives the realtime clock (RTCCLK).
+
+RC 48 MHz internal clock sources (HSI48) to potentially drive the USB FS, the SDMMC and the RNG.
+
+Each clock source can be switched on or off independently when it is not used, to optimize power consumption.
+
+We’ll be using CubeMX in the step of configuring the clock tree. Where we can set the desired SYSCLK speed (up to 80MHz for L432KC or up to 72MHz for F103C8). And we can also set the clock speed for the different peripherals, buses, and the USB hardware as well.
+
+STM32 Clock Tree Configuration With CubeMX
+ 
+And that’s it for this tutorial. In the next one, we’ll get a closer look at the LL + HAL libraries that we’ll be using later on by configuring the CubeMX software tool. Afterward, we shall start getting into the hardware peripherals and starts doing some practical LAB examples.
