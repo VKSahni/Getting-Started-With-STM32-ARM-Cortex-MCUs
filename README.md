@@ -30,3 +30,15 @@ Boot from embedded SRAM
 
 BOOT0 value may come from the PH3-BOOT0 pin or from an option bit depending on the value of a user option bit to free the GPIO pad if needed. A Flash empty check mechanism is implemented to force the boot from system flash if the first flash memory location is not programmed and if the boot selection is configured to boot from the main flash.
 The boot-loader is located in system memory. It is used to reprogram the Flash memory by using USART, I2C, SPI or USB FS in Device mode through DFU (device firmware upgrade).
+# System Architecture & Bus Matrix
+The system mainly consists of 32-Bit Multilayer AHB Bus Matrix (Highlighted in Yellow) that interconnects the following hardware components:
+# Five masters:
+Cortex®-M4 with FPU core I-bus
+
+Cortex®-M4 with FPU core D-bus
+
+Cortex®-M4 with FPU core S-bus
+
+DMA1
+
+DMA2
