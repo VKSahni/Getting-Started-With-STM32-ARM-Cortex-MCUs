@@ -23,7 +23,9 @@ The device embeds a Firewall that protects code sensitive and secure data from a
 At startup, BOOT0 pin or nSWBOOT0 option bit, and BOOT1 option bit are used to select one of three boot options:
 
 Boot from user Flash
+
 Boot from system memory
+
 Boot from embedded SRAM
 
 BOOT0 value may come from the PH3-BOOT0 pin or from an option bit depending on the value of a user option bit to free the GPIO pad if needed. A Flash empty check mechanism is implemented to force the boot from system flash if the first flash memory location is not programmed and if the boot selection is configured to boot from the main flash.
